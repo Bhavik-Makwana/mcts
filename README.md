@@ -20,3 +20,6 @@ python tictactoe.py
 ```
 
 The game pits an MCTS-powered player (X) against a random player (O).
+
+## Reference
+https://www.youtube.com/watch?v=UXW2yZndl7U + gemini 2.5pro
