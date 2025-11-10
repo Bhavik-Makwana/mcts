@@ -17,7 +17,7 @@ def mcts_search(board: TicTacToe, num_simulations: int):
     return best_child.action
 
 def play_game():
-    game_board = TicTacToe()
+    game_board = TicTacToe(size=10)
     while True:
         print("Current player: ", game_board.current_player)
         if game_board.current_player == 'X':

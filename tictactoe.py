@@ -1,8 +1,9 @@
 import random
 
 class TicTacToe:
-    def __init__(self):
-        self.board = [[' ' for _ in range(3)] for _ in range(3)]
+    def __init__(self, size=3):
+        self.board = [[' ' for _ in range(size)] for _ in range(size)]
+        self.size = size
         self.players = ['X', 'O']
         self.current_player = 'X'
 
@@ -21,7 +22,7 @@ class TicTacToe:
         self.switch_player()
 
     def get_valid_moves(self):
-        return [(i, j) for i in range(3) for j in range(3) if self.board[i][j] == ' ']
+        return [(i, j) for i in range(self.size) for j in range(self.size) if self.board[i][j] == ' ']
 
     def __str__(self):
         s = ''
@@ -33,16 +34,26 @@ class TicTacToe:
     def check_win(self) -> int | None:
         players = ['X', 'O']
         for player in players:
-            for i in range(3):
-                if self.board[i][0] == self.board[i][1] == self.board[i][2] == player:
+            # Check rows
+            for i in range(self.size):
+                if all(self.board[i][j] == player for j in range(self.size)):
                     return 1 if player == 'X' else -1
-                if self.board[0][i] == self.board[1][i] == self.board[2][i] == player:
+            
+            # Check columns
+            for j in range(self.size):
+                if all(self.board[i][j] == player for i in range(self.size)):
                     return 1 if player == 'X' else -1
-            if self.board[0][0] == self.board[1][1] == self.board[2][2] == player:
+            
+            # Check main diagonal (top-left to bottom-right)
+            if all(self.board[i][i] == player for i in range(self.size)):
                 return 1 if player == 'X' else -1
-            if self.board[0][2] == self.board[1][1] == self.board[2][0] == player:
+            
+            # Check anti-diagonal (top-right to bottom-left)
+            if all(self.board[i][self.size - 1 - i] == player for i in range(self.size)):
                 return 1 if player == 'X' else -1
-        if any(self.board[i][j] == ' ' for i in range(3) for j in range(3)):
+        
+        # Check if board is full (tie)
+        if any(self.board[i][j] == ' ' for i in range(self.size) for j in range(self.size)):
             return None
         return 0
 
